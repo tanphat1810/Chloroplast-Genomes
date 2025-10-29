@@ -292,3 +292,83 @@ PhyML hỗ trợ bootstrap nội tại.
 MrBayes dùng posterior probability thay thế bootstrap.
 
 TreeBeST có thể bootstrap bằng script hỗ trợ.
+MUSCLE
+🔹 Mục đích:
+
+Căn chỉnh đa trình tự (Multiple Sequence Alignment) cho các vùng gen hoặc đoạn intergenic được chọn (ví dụ: matK, rbcL, ycf1, trnH-psbA, v.v.).
+
+Giúp so sánh mức độ biến đổi nucleotide giữa các loài.
+
+🔹 Nguyên lý:
+
+MUSCLE (Multiple Sequence Comparison by Log-Expectation) sử dụng thuật toán iterative refinement để căn chỉnh chính xác và nhanh chóng.
+
+Đây là công cụ chuẩn được dùng trong nhiều pipeline về DNA barcoding.
+
+🔹 Đầu vào:
+
+File FASTA của từng gen hoặc đoạn được trích ra từ genome lục lạp (đã annotate).
+
+Ví dụ: rbcL.fasta, matK.fasta, ycf1.fasta gồm tất cả các loài.
+
+🔹 Đầu ra:
+
+File .aln hoặc .meg chứa các chuỗi đã được căn chỉnh.
+Trích dẫn:
+
+Edgar, R.C. (2004). MUSCLE: multiple sequence alignment with high accuracy and high throughput. Nucleic Acids Research, 32(5):1792–1797.
+MEGA7
+🔹 Mục đích:
+
+Tính mức độ biến dị di truyền (sequence divergence) giữa các loài cho từng gen, được biểu diễn bằng p-distance.
+
+Xác định gen có giá trị phân giải cao nhất, tức là vùng biến động mạnh → ứng viên tốt cho DNA barcode.
+
+🔹 Nguyên lý:
+
+p-distance = số nucleotide khác nhau / tổng số nucleotide được so sánh.
+
+Mô hình Kimura 2-Parameter (K2P) được dùng để hiệu chỉnh tần suất thay thế chuyển tiếp (transition) và đảo vị (transversion).
+
+🔹 Đầu vào:
+
+File .meg hoặc .aln (căn chỉnh từ MUSCLE).
+
+Các chuỗi CDS hoặc vùng intergenic tương ứng của từng loài.
+
+🔹 Đầu ra:
+
+Bảng ma trận khoảng cách p-distance giữa các loài.
+
+Bảng trung bình giá trị p-distance cho từng gen.
+
+Từ đó chọn gen có p-distance cao nhất → mã vạch DNA tiềm năng.
+
+🔹 Cách chạy (trong MEGA7 GUI):
+
+File → Open Alignment → chọn file .aln
+
+Compute → Estimate Evolutionary Distances
+
+Chọn Model: Kimura 2-parameter (K2P)
+
+Output: bảng p-distance.
+
+🔹 Trích dẫn:
+
+Kumar, S., Stecher, G., & Tamura, K. (2016). MEGA7: Molecular Evolutionary Genetics Analysis version 7.0 for bigger datasets. Molecular Biology and Evolution, 33(7):1870–1874.
+Kimura, M. (1980). A simple method for estimating evolutionary rates of base substitutions through comparative studies of nucleotide sequences. J. Mol. Evol., 16:111–120.
+Lựa chọn gen ứng viên DNA barcode
+🔹 Cách thực hiện:
+
+So sánh giá trị trung bình p-distance giữa các gen.
+
+Chọn các gen có mức biến động cao (p-distance lớn) và ít vùng thiếu dữ liệu.
+
+Thường các gen ycf1, matK, rbcL, trnH-psbA là ứng viên mạnh.
+
+🔹 Kết quả:
+
+Danh sách các marker gen tiềm năng cho định danh loài Dipterocarpoideae.
+
+Có thể trực quan hóa bằng biểu đồ so sánh (ví dụ vẽ barplot trong R hoặc Excel).
