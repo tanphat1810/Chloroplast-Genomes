@@ -1,0 +1,6 @@
+GetOrganelle vs NOVOPlasty – mục đích và khi nào dùng
+Hai công cụ này đều có thể lắp ráp (assemble) bộ gen lục lạp từ dữ liệu Illumina, nhưng có một chút khác biệt:
+Công cụ	Đặc điểm	Khi nên dùng
+GetOrganelle	Dùng thuật toán graph-based dựa trên SPAdes + seed file, tự động nhận biết trình tự lục lạp, cho kết quả cực kỳ chính xác, hoàn chỉnh, ít lỗi.	✅ Khi dữ liệu tốt, đủ coverage, bạn muốn bản genome “hoàn thiện” nhất.
+NOVOPlasty	Cần chỉ định một seed sequence (một gene như rbcL hoặc matK), lắp ráp theo hướng kéo dài seed.	🔄 Khi GetOrganelle không ra vòng đầy đủ hoặc gặp lỗi.
+Nếu kết quả từ GetOrganelle là tốt (đầy đủ LSC–IR–SSC, không gap), chỉ cần dùng GetOrganelle thôi, không bắt buộc chạy NOVOPlasty.
