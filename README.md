@@ -40,7 +40,7 @@ Dự án nhằm khảo sát đặc điểm cấu trúc, vùng lặp, phân tích
 **Mục đích:** Xây dựng và hoàn thiện bộ gen lục lạp hoàn chỉnh.  
 - **Lắp ráp (assembly):**  
   - Sử dụng GetOrganelle và NOVOPlasty, chọn kết quả hoàn chỉnh nhất.  
-  - So khớp với genome tham chiếu *D. turbinatus* để định hướng contig.  
+  - So khớp với genome tham chiếu ref-genome để định hướng contig.  
 - **Hiệu chỉnh & hoàn thiện (polishing):**  
   - Dùng NextPolish để sửa lỗi nhỏ và lấp gap.  
 - **Chú giải (annotation):**  
