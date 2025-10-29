@@ -4,3 +4,291 @@ Công cụ	Đặc điểm	Khi nên dùng
 GetOrganelle	Dùng thuật toán graph-based dựa trên SPAdes + seed file, tự động nhận biết trình tự lục lạp, cho kết quả cực kỳ chính xác, hoàn chỉnh, ít lỗi.	✅ Khi dữ liệu tốt, đủ coverage, bạn muốn bản genome “hoàn thiện” nhất.
 NOVOPlasty	Cần chỉ định một seed sequence (một gene như rbcL hoặc matK), lắp ráp theo hướng kéo dài seed.	🔄 Khi GetOrganelle không ra vòng đầy đủ hoặc gặp lỗi.
 Nếu kết quả từ GetOrganelle là tốt (đầy đủ LSC–IR–SSC, không gap), chỉ cần dùng GetOrganelle thôi, không bắt buộc chạy NOVOPlasty.
+NextPolish
+Sau khi lắp ráp bằng GetOrganelle, genome có thể vẫn còn lỗi base nhỏ (do sai sót khi đọc Illumina).
+NextPolish là bước “polishing” – hiệu chỉnh lỗi base và lấp gap bằng cách map lại reads Illumina lên genome đã lắp ráp.
+Input: file .fasta của genome lắp ráp + reads Illumina.
+Output: bản genome tinh chỉnh, chính xác hơn.
+📌 Nếu GetOrganelle cho ra kết quả “tròn hoàn chỉnh, không gap” và không thấy mismatch khi kiểm tra trong Geneious, có thể bỏ qua NextPolish — nó không bắt buộc, chỉ để tinh chỉnh.
+Có thể thay thế PGA bằng Geseq
+Tích hợp tự động tất cả bước chú giải gen, tRNA, rRNA, xác định IR, và vẽ bản đồ bằng OGDRAW.
+Giao diện web (https://chlorobox.mpimp-golm.mpg.de/geseq.html).
+Kết quả annotation xuất ra dạng .gb hoặc .gff, có thể dùng để upload GenBank.
+Tandem Repeats Finder (TRF) v4.09
+Mục đích: phát hiện các đoạn lặp liên tiếp (tandem repeats) trong bộ gen lục lạp.
+Loại repeat phát hiện: microsatellite (SSR) và minisatellite – ví dụ như (AAT)n, (ATC)n, (GAA)n.
+Nguyên lý: tìm các đoạn trình tự lặp lại nhiều lần kề nhau trong genome.
+Input: file .fasta của genome lục lạp.
+Output: file .dat chứa vị trí, độ dài, và loại repeat.
+Ý nghĩa: xác định các vùng gen dễ biến động hoặc tái tổ hợp – là một trong các chỉ thị di truyền có giá trị.
+RepeatMasker v1.317
+
+Mục đích: nhận diện và phân loại các phần tử di truyền có thể chuyển vị (Transposable Elements – TEs).
+
+Các loại phần tử nhận diện:
+
+DNA transposons
+
+LINE (Long Interspersed Nuclear Elements)
+
+SINE (Short Interspersed Nuclear Elements)
+
+LTR (Long Terminal Repeats)
+
+Input: file .fasta của genome.
+
+Output: danh sách các vùng chứa TE và loại TE tương ứng.
+Ghi chú: chạy RepeatMasker với thông số mặc định (default parameters).
+Script auto_repeat.pl (từ Zhou He-ling, BGI)
+
+Mục đích: tự động phân loại kết quả từ RepeatMasker thành 4 nhóm TE lớn (DNA transposon, LINE, SINE, LTR).
+
+Nguồn: script nội bộ do nhóm nghiên cứu cung cấp, được ghi chú trong bài là “auto_repeat.pl from Zhouheling (zhouheling@genomics.org.cn
+)”.
+
+Chức năng: gom dữ liệu từ RepeatMasker để đếm số lượng và chiều dài từng loại TE → tạo bảng thống kê cho biểu đồ.
+Phân tích cấu trúc & phần tử lặp (Structural & Repeat Analysis)
+🎯 Mục đích: Khảo sát đặc điểm cấu trúc và các yếu tố lặp ảnh hưởng tiến hóa.
+
+Các bước:
+
+Tandem Repeats Finder (TRF) → phát hiện lặp trực tiếp.
+
+RepeatMasker + auto_repeat.pl → nhận diện TE (LINE, SINE, LTR, transposon).
+
+Quan sát vùng IR/LSC/SSC → phát hiện co/giãn IR.
+Đầu ra: bản đồ lặp, IR boundary, và đặc điểm cấu trúc so sánh.
+có thể dùng IRscope thay thế
+mVISTA (shuffle-LAGAN mode)
+Mục đích:
+
+So sánh mức độ tương đồng trình tự (sequence identity) giữa nhiều bộ gen lục lạp.
+
+Phát hiện vùng biến động cao (hotspots) hoặc vùng bảo tồn cao.
+
+🔹 Nguyên lý:
+
+mVISTA thực hiện căn chỉnh toàn bộ genome (whole-genome alignment).
+
+Chế độ shuffle-LAGAN đặc biệt thích hợp cho chuỗi có cùng thứ tự gene (synteny conserved), như chloroplast genomes.
+
+🔹 Đầu vào:
+
+File FASTA hoặc GenBank của nhiều bộ gen (≥ 2).
+
+Chọn một genome tham chiếu (ví dụ H. mollissima như trong bài).
+
+🔹 Đầu ra:
+
+Biểu đồ so sánh (percent identity plot) thể hiện vùng LSC–IR–SSC.
+
+Màu sắc biểu diễn mức độ bảo tồn giữa các loài.
+
+🔹 Cách chạy:
+
+Giao diện web: https://genome.lbl.gov/vista/mvista/submit.shtml
+
+Hoặc cài bản local của VISTA tools (có gói shuffle-LAGAN).
+
+🔹 Trích dẫn chính:
+
+Frazer KA, Pachter L, Poliakov A, Rubin EM, Dubchak I. (2004). VISTA: computational tools for comparative genomics. Nucleic Acids Research, 32(Web Server issue): W273–W279.
+CodonW
+🔹 Mục đích:
+
+Phân tích độ lệch sử dụng codon (codon usage bias) và nội dung GC trong các gen mã hóa protein.
+
+Giúp đánh giá áp lực chọn lọc và hiệu quả biểu hiện gen.
+
+🔹 Thông số tính toán:
+
+CAI – Codon Adaptation Index
+
+CBI – Codon Bias Index
+
+Fop – Frequency of Optimal Codons
+
+ENc – Effective Number of Codons
+
+GC3s – GC content tại vị trí thứ 3 của codon
+
+RSCU – Relative Synonymous Codon Usage
+
+🔹 Đầu vào:
+
+File FASTA chứa các CDS (Coding DNA Sequences).
+(Thường trích xuất từ genome chú giải bằng GeSeq hoặc PGA.)
+
+🔹 Đầu ra:
+
+Bảng chỉ số bias từng gen hoặc trung bình toàn genome.
+
+Có thể dùng Excel/R để vẽ đồ thị ENc–GC3s hoặc RSCU plot.
+Trích dẫn chính:
+
+Peden, J.F. (1999). Analysis of codon usage. University of Nottingham PhD Thesis.
+PRANK v.170427
+Mục đích:
+
+Thực hiện căn chỉnh đa trình tự (multiple sequence alignment) của các gen mã hóa protein giữa các loài (codon-based alignment).
+
+🔹 Vì sao dùng PRANK thay vì MAFFT hoặc MUSCLE:
+
+PRANK bảo toàn khung đọc mã hóa (codon alignment) và xử lý chèn/xóa (indel) hợp lý hơn – phù hợp khi chuẩn bị dữ liệu cho phân tích dN/dS (Ka/Ks).
+
+🔹 Đầu vào:
+
+File FASTA của mỗi gen (trình tự DNA của gen ortholog giữa các loài).
+
+🔹 Đầu ra:
+
+File .aln hoặc .phy căn chỉnh, dùng cho bước tính Ka/Ks và PAML.
+Trích dẫn:
+
+Löytynoja, A. & Goldman, N. (2005). An algorithm for progressive multiple alignment of sequences with insertions. Proc Natl Acad Sci USA, 102(30):10557–10562.
+KaKs Calculator
+🔹 Mục đích:
+
+Tính tỷ lệ thay thế không đồng nghĩa (Ka) và đồng nghĩa (Ks) giữa các trình tự gen — biểu thị mức độ chọn lọc tự nhiên.
+
+🔹 Nguyên lý:
+
+Ka/Ks < 1 → chọn lọc âm (purifying selection).
+
+Ka/Ks = 1 → trung tính (neutral).
+
+Ka/Ks > 1 → chọn lọc dương (positive selection).
+
+🔹 Đầu vào:
+
+File căn chỉnh gen (từ PRANK).
+
+File cây hoặc cặp loài so sánh (pairwise).
+
+🔹 Đầu ra:
+
+Bảng kết quả Ka, Ks, và Ka/Ks cho từng cặp loài hoặc từng gen.
+Trích dẫn:
+
+Zhang, Z. et al. (2006). KaKs_Calculator: calculating Ka and Ks through model selection and model averaging. Genomics Proteomics Bioinformatics, 4(4):259–263.
+PAML – Codeml
+🔹 Mục đích:
+
+Phát hiện gen chịu chọn lọc dương (positive selection) ở mức thống kê.
+PAML là gói phân tích chọn lọc tiến hóa tiên tiến nhất, sử dụng các mô hình thay thế codon phức tạp.
+
+🔹 Thành phần chính:
+
+codeml là module được dùng trong bài.
+
+Chạy trên cây phát sinh (species tree) và căn chỉnh gen để ước tính các tham số ω (dN/dS).
+
+🔹 Cách hoạt động:
+
+Dùng mô hình site models (M7, M8) hoặc branch-site models,
+so sánh bằng chi-square test để xem gen nào có p < 0.05 → chọn lọc dương.
+
+🔹 Đầu vào:
+
+File căn chỉnh codon (.phy hoặc .aln từ PRANK).
+
+File cây (tree.nwk hoặc .tre) được xây dựng trước đó (ví dụ từ MrBayes/PhyML).
+
+File cấu hình codeml.ctl.
+
+🔹 Đầu ra:
+
+Bảng thống kê likelihood và danh sách các vị trí/ gen có ω > 1 và p < 0.05.
+Trích dẫn:
+
+Yang, Z. (2007). PAML 4: Phylogenetic analysis by maximum likelihood. Mol Biol Evol, 24(8):1586–1591.
+Chuẩn bị dữ liệu – trích xuất và căn chỉnh gen đơn bản sao
+🔹 Mục đích:
+
+Chọn các gen mã hóa protein đơn bản sao (single-copy genes) có mặt ở tất cả các loài để đảm bảo tính đồng nhất.
+
+Căn chỉnh (align) từng gen và ghép nối (concatenate) thành một chuỗi dài để dùng dựng cây.
+
+🔹 Công cụ có thể sử dụng:
+
+PRANK hoặc MAFFT để căn chỉnh trình tự codon hoặc amino acid.
+(Trong bài, họ dùng PRANK — cùng công cụ với phần tính Ka/Ks.)
+
+Sau đó ghép các căn chỉnh thành một siêu ma trận (supermatrix) bằng catfasta2phyml.pl hoặc các script tương tự.
+
+🔹 Đầu vào:
+
+CDS của các gen ortholog (từ GeSeq hoặc PGA).
+
+🔹 Đầu ra:
+
+File .phy hoặc .fasta chứa concatenated alignment.
+MrBayes v3.2.2
+🔹 Phương pháp: Bayesian Inference (BI)
+
+Dựng cây theo mô hình xác suất Bayes, ước lượng hậu nghiệm (posterior probabilities) của các nhánh.
+
+Cho kết quả ổn định và tin cậy cao khi có nhiều gen.
+
+🔹 Đầu vào:
+
+File .nex hoặc .phy (alignment concatenated).
+Đầu ra:
+
+File .con.tre (cây đồng thuận Bayesian).
+
+Giá trị posterior probability (PP) của từng nhánh.
+
+🔹 Trích dẫn:
+
+Ronquist F., Teslenko M., van der Mark P. et al. (2012). MrBayes 3.2: efficient Bayesian phylogenetic inference and model choice across a large model space. Systematic Biology, 61(3):539–542.
+PhyML v3.0
+🔹 Phương pháp: Maximum Likelihood (ML)
+
+Dựng cây theo nguyên lý xác suất tối đa, tìm cây có khả năng cao nhất tạo ra dữ liệu quan sát được.
+
+Cho phép bootstrap để đánh giá độ tin cậy nhánh.
+
+🔹 Đầu vào:
+
+File .phy hoặc .fasta (alignment concatenated).
+Đầu ra:
+
+File .phy_phyml_tree.txt (cây ML).
+
+Các giá trị bootstrap (% độ tin cậy nhánh).
+
+🔹 Trích dẫn:
+
+Guindon, S., Dufayard, J.F., Lefort, V., et al. (2010). New algorithms and methods to estimate maximum-likelihood phylogenies: assessing the performance of PhyML 3.0. Systematic Biology, 59(3):307–321.
+TreeBeST v1.9.2
+🔹 Phương pháp: Neighbour-Joining (NJ)
+
+Dựng cây theo phương pháp liên kết lân cận (distance-based), nhanh hơn, ít phức tạp hơn ML và BI.
+
+Được dùng để đối chiếu kết quả với hai phương pháp trên, đảm bảo tính nhất quán.
+
+🔹 Đầu vào:
+
+File .phy hoặc .fasta.
+Đầu ra:
+
+File .nwk hoặc .tree – cây phát sinh chủng loại theo NJ.
+
+🔹 Trích dẫn:
+
+Vilella A.J. et al. (2009). EnsemblCompara GeneTrees: Complete, duplication-aware phylogenetic trees in vertebrates. Genome Research, 19(2):327–335.
+Bootstrap và đánh giá nhánh
+🔹 Phương pháp:
+
+Lặp lại quá trình dựng cây 100 lần (bootstrap = 100 replicates).
+
+Đánh giá độ tin cậy của các nhánh (branch support).
+
+🔹 Công cụ:
+
+PhyML hỗ trợ bootstrap nội tại.
+
+MrBayes dùng posterior probability thay thế bootstrap.
+
+TreeBeST có thể bootstrap bằng script hỗ trợ.
