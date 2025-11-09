@@ -1,7 +1,10 @@
 
 
 # 🌿 Chloroplast Genomes
-![Workflow](Pipeline.svg)
+<p align="center">
+  <img src="Pipeline.svg" width="800" alt="Chloroplast Genomes Logo">
+</p>
+
 **Phân tích lục lạp của 3 loài thực vật: Chò Chỉ, Sâm Cau và Lan Hài Lông.**  
 Dự án nhằm khảo sát đặc điểm cấu trúc, vùng lặp, phân tích chọn lọc tiến hóa và phát sinh chủng loại dựa trên bộ gen lục lạp hoàn chỉnh.
 
