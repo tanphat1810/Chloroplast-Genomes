@@ -1,3 +1,5 @@
+![Workflow](Pipeline.svg)
+
 # 🌿 Chloroplast Genomes
 
 **Phân tích lục lạp của 3 loài thực vật: Chò Chỉ, Sâm Cau và Lan Hài Lông.**  
