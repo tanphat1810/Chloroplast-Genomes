@@ -5,31 +5,8 @@
   <img src="Workflow.png" width="6000" height="1200" alt="Chloroplast Genomes Logo">
 </p>
 
-**Phân tích lục lạp của 3 loài thực vật: Chò Chỉ, Sâm Cau và Lan Hài Lông.**  
+**Phân tích lục lạp của thực vật**  
 Dự án nhằm khảo sát đặc điểm cấu trúc, vùng lặp, phân tích chọn lọc tiến hóa và phát sinh chủng loại dựa trên bộ gen lục lạp hoàn chỉnh.
-
----
-
-## 🧭 Sơ lược về các loài
-
-### 🌳 Cây Chò Chỉ  
-- **Tên khoa học:** *Parashorea chinensis* H. Wang  
-- **Họ:** Dipterocarpaceae  
-- **Phân bố:** Rừng thường xanh ở Việt Nam, Lào, Thái Lan, Campuchia, Trung Quốc.  
-- **Đặc điểm:** Cây gỗ lớn, thuộc nhóm gỗ quý nhóm II, có giá trị cao về kinh tế và sinh thái.  
-
-### 🌿 Cây Sâm Cau  
-- **Tên khoa học:** *Curculigo orchioides* Gaertn.  
-- **Họ:** Hypoxidaceae  
-- **Phân bố:** Việt Nam, Ấn Độ, Trung Quốc, Thái Lan, Campuchia.  
-- **Đặc điểm:** Thân rễ dùng làm dược liệu, có tác dụng tăng cường sinh lực, chống oxy hóa và kháng viêm.  
-
-### 🌸 Lan Hài Lông  
-- **Tên khoa học:** *Paphiopedilum hirsutissimum* (Lindl. ex Hook. f.) Stein  
-- **Họ:** Orchidaceae  
-- **Phân bố:** Vùng núi Tây Bắc Việt Nam, Trung Quốc, Myanmar, Ấn Độ.  
-- **Đặc điểm:** Loài lan đất, hoa lớn, cánh môi có lông đặc trưng, đang được bảo tồn do nguy cơ tuyệt chủng cao.  
-
 ---
 
 ## 📄 Bài báo tham khảo
@@ -44,14 +21,17 @@ Dự án nhằm khảo sát đặc điểm cấu trúc, vùng lặp, phân tích
 ### 1. Lắp ráp, kiểm tra và chú giải bộ gen *(Assembly & Annotation)*  
 **Mục đích:** Xây dựng và hoàn thiện bộ gen lục lạp hoàn chỉnh.  
 - **Lắp ráp (assembly):**  
-  - Sử dụng GetOrganelle và NOVOPlasty, chọn kết quả hoàn chỉnh nhất.  
-  - So khớp với genome tham chiếu ref-genome để định hướng contig.  
+  - Sử dụng công cụ GetOrganelle v1.7.1, một bộ công cụ mã nguồn mở được thiết kế để lắp ráp de novo bộ gen của các bào quan như ty thể (mitochondria) và lục lạp (chloroplast) từ dữ liệu giải trình tự thế hệ mới (NGS).
+  - Kết quả sẽ cho ra file fasta là 1 genome hoàng chỉnh và file .gfa để trực quan hóa hình ảnh genome
+  - https://github.com/Kinggerm/GetOrganelle
 - **Hiệu chỉnh & hoàn thiện (polishing):**  
-  - Dùng NextPolish để sửa lỗi nhỏ và lấp gap.  
+  - Xử dụng NextPolish để sửa lỗi nhỏ và lấp gap.
+  - https://github.com/Nextomics/NextPolish 
 - **Chú giải (annotation):**  
-  - Dùng PGA, kiểm tra tRNA bằng ARAGORN + tRNAscan-SE.  
-  - Trực quan hóa sơ đồ vòng tròn bằng OGDRAW.  
-
+  - Sử dụng công cụ trực tuyến Geseq để chú giải bộ genome lục lạp
+  - Cho kết quả file Genbank và gff3 để thực hiện các bước phân tích tiếp theo
+  - Geseq cho phép trực quan hóa sơ đồ vòng tròn bằng OGDRAW.  
+  - https://chlorobox.mpimp-golm.mpg.de/geseq.html
 ---
 
 ### 2. Phân tích cấu trúc & phần tử lặp *(Structural & Repeat Analysis)*  
