@@ -2,7 +2,7 @@
 
 # 🌿 Chloroplast Genomes
 <p align="center">
-  <img src="Pipeline.svg" width="800" alt="Chloroplast Genomes Logo">
+  <img src="Pipeline.svg" width="1200" alt="Chloroplast Genomes Logo">
 </p>
 
 **Phân tích lục lạp của 3 loài thực vật: Chò Chỉ, Sâm Cau và Lan Hài Lông.**  
